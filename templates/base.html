@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask CRUD</title>
+    <link href="/static/bootstrap-4.4.1-dist/css/ " rel="stylesheet">
+    <link href="/static/bootstrap-4.4.1-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="/static/bootstrap-4.4.1-dist/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-3">Welcome to Flask Crud</h1>
+            </div>
+        </div>
+        <div class="content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>Student List <button class="btn btn-success " data-toggle="modal"
+                            data-target="#addStudent">Add Student to List</button></h4>
+                </div>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Serial</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>desterio</td>
+                        <td>des@hotmail.com</td>
+                        <td>0111111</td>
+                        <td>
+                            <a href="" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editButton">Edit</a>
+                            <a href="" class="btn btn-danger btn-xs"
+                                onclick="return confirm ('are you sure you want to delete student?')">Delete</a>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--MODALS-->
+    <!--ADD STUDENT MODAL-->
+    <div class="modal fade" id="addStudent" tabindex="-1" role="dialog" aria-labelledby="addStudent" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addStudent">Add student</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="myStudentForm" action="{{url_for('insert')}}" method="POST">
+                        
+                        <div class="form-group">
+                            <label for="formName">Name:</label>
+                            <input type="text" class="form-control" name="name" id="formName" placeholder="Name" required="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="formEmail">Email:</label>
+                            <input type="email" class="form-control"  name="email" id="formEmail" placeholder="Email" required="1">
+                        </div>
+                    </form>
+                    <div class="form-group">
+                        <label for="formPhone">Phone:</label>
+                        <input type="text" class="form-control" name="phone" id="formPhone" placeholder="Phone" required="1">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">
+                            Insert Data
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!---edit modal-->
+    <div class="modal fade" id="editButton" tabindex="-1" role="dialog" aria-labelledby="editButton" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >update student</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="myStudentForm">
+                        <div class="form-group">
+                            <label for="formSerial">Serial:</label>
+                            <input type="text" class="form-control" id="formSerial"  value="serial">
+                        </div>
+                        <div class="form-group">
+                            <label for="formName">Name:</label>
+                            <input type="text" class="form-control" id="formName"  value="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="formEmail">Email:</label>
+                            <input type="email" class="form-control" id="formEmail"  value="email">
+                        </div>
+                    </form>
+                    <div class="form-group">
+                        <label for="formPhone">Phone:</label>
+                        <input type="text" class="form-control" id="formPhone"  value="phone">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">
+                          Update
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous">
+    </script>
+    <script src="/static/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
