@@ -23,8 +23,9 @@ def insert():
         phone = request.form['phone']
 
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO student (name,email,phone) values(%s,%s,%s)",(name,email,phone))
+        cur.execute("INSERT INTO student (name,email,phone) VALUES (%s,%s,%s)",(name,email,phone))
         mysql.connection.commit()
+
         return redirect(url_for('index'))
 
 if __name__=="__main__":
