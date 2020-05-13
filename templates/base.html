@@ -22,9 +22,23 @@
         <div class="content">
             <div class="row">
                 <div class="col-sm-12">
-                    <h4>Student List <button class="btn btn-success " data-toggle="modal"
-                            data-target="#addStudent">Add Student to List</button></h4>
+                    <h4>Student List <button class="btn btn-success " data-toggle="modal" data-target="#addStudent">Add
+                            Student to List</button></h4>
                 </div>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages%}
+                <div class="alert alert-success" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{message}}
+
+                </div>
+
+                {% endfor %}
+                {%endif%}
+                {%endwith%}
                 <table class="table table-striped">
                     <tr>
                         <th>Serial</th>
@@ -33,17 +47,61 @@
                         <th>Phone</th>
                         <th>Action</th>
                     </tr>
+                    {% for row in student%}
                     <tr>
-                        <td>01</td>
-                        <td>desterio</td>
-                        <td>des@hotmail.com</td>
-                        <td>0111111</td>
+                        <td>{{row.0}}</td>
+                        <td>{{row.1}}</td>
+                        <td>{{row.2}}</td>
+                        <td>{{row.3}}</td>
                         <td>
-                            <a href="" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editButton">Edit</a>
-                            <a href="" class="btn btn-danger btn-xs"
+                            <a href="/update/{{row.0}}" class="btn btn-warning btn-xs" data-toggle="modal"
+                                data-target="#editButton{{row.0}}">Edit</a>
+                            <a href="/delete/{{row.0}}" class="btn btn-danger btn-xs"
                                 onclick="return confirm ('are you sure you want to delete student?')">Delete</a>
                         </td>
                     </tr>
+
+                    <div class="modal fade" id="editButton{{row.0}}" tabindex="-1" role="dialog" aria-labelledby="editButton{{row.0}}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">update student</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="myStudentForm" action="{{url_for('update')}}" method="POST">
+                
+                                        <div class="form-group">
+                                            <label for="formName">Name:</label>
+                                            <input type="hidden" name="id" value="{{row.0}}">
+
+                                            <input type="text" class="form-control" id="formName" name="name" value="{{row.1}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="formEmail">Email:</label>
+                                            <input type="email" class="form-control" id="formEmail" name="email" value="{{row.2}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="formPhone">Phone:</label>
+                                            <input type="text" class="form-control" id="formPhone" name="phone" value="{{row.3}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" type="submit">
+                                                Update
+                                            </button>
+                                        </div>
+                                    </form>
+                
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
 
                 </table>
             </div>
@@ -63,18 +121,18 @@
                 </div>
                 <div class="modal-body">
                     <form class="myStudentForm" action="{{url_for('insert')}}" method="POST">
-                        
+
                         <div class="form-group">
                             <label for="formName">Name:</label>
-                            <input type="text" class="form-control" name="name"  required="1">
+                            <input type="text" class="form-control" name="name" required="1">
                         </div>
                         <div class="form-group">
                             <label for="formEmail">Email:</label>
-                            <input type="email" class="form-control"  name="email"  required="1">
+                            <input type="email" class="form-control" name="email" required="1">
                         </div>
                         <div class="form-group">
                             <label for="formPhone">Phone:</label>
-                            <input type="text" class="form-control" name="phone"  required="1">
+                            <input type="text" class="form-control" name="phone" required="1">
                         </div>
                         <div class="form-group">
                             <button class="btn btn-primary" type="submit">
@@ -82,7 +140,7 @@
                             </button>
                         </div>
                     </form>
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -92,44 +150,7 @@
     </div>
 
     <!---edit modal-->
-    <div class="modal fade" id="editButton" tabindex="-1" role="dialog" aria-labelledby="editButton" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" >update student</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="myStudentForm">
-                        
-                        <div class="form-group">
-                            <label for="formName">Name:</label>
-                            <input type="text" class="form-control" id="formName"  value="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="formEmail">Email:</label>
-                            <input type="email" class="form-control" id="formEmail"  value="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="formPhone">Phone:</label>
-                            <input type="text" class="form-control" id="formPhone"  value="phone">
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-primary" type="submit">
-                              Update
-                            </button>
-                        </div>
-                    </form>
-                    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
         integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous">
